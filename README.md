@@ -89,11 +89,12 @@ WARNING: Discarding https://files.pythonhosted.org/packages/41/d0/7eaebdca0723b2
 ERROR: Could not find a version that satisfies the requirement PyGObject==3.42.1 (from versions: 3.27.0, 3.27.1, 3.27.2, 3.27.3, 3.27.4, 3.27.5, 3.28.0, 3.28.1, 3.28.2, 3.28.3, 3.29.1.dev0, 3.29.2.dev0, 3.29.3.dev0, 3.30.0, 3.30.1, 3.30.2, 3.30.3, 3.30.4, 3.30.5, 3.31.1.dev0, 3.31.2.dev0, 3.31.3.dev0, 3.31.4.dev0, 3.32.0, 3.32.1, 3.32.2, 3.33.1.dev0, 3.34.0, 3.36.0, 3.36.1, 3.38.0, 3.40.0, 3.40.1, 3.42.0, 3.42.1, 3.42.2)
 ERROR: No matching distribution found for PyGObject==3.42.1
 </code>
+
 ## Problem 2
 
 Tried installing sndfile mannually  also failed
 
-`
+<code>
 2022-08-03 08:34:04.609951: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
 Traceback (most recent call last):
 File "/home/studio-lab-user/intuit-ga-dat15/projects/whistlizer/app.py", line 20, in <module>
@@ -181,7 +182,7 @@ error: command '/usr/bin/gcc' failed with exit code 1
 ----------------------------------------
 ERROR: Command errored out with exit status 1: /home/studio-lab-user/.conda/envs/studiolab/bin/python3.9 -u -c 'import io, os, sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-jp5rnrup/sndfile_d1d725947fdb42fe8f25818228ca23e9/setup.py'"'"'; __file__='"'"'/tmp/pip-install-jp5rnrup/sndfile_d1d725947fdb42fe8f25818228ca23e9/setup.py'"'"';f = getattr(tokenize, '"'"'open'"'"', open)(__file__) if os.path.exists(__file__) else io.StringIO('"'"'from setuptools import setup; setup()'"'"');code = f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' install --record /tmp/pip-record-1dfijoyu/install-record.txt --single-version-externally-managed --compile --install-headers /home/studio-lab-user/.conda/envs/studiolab/include/python3.9/sndfile Check the logs for full command output.
 (studiolab) studio-lab-user@default:~/intuit-ga-dat15/projects/whistlizer$ 
-`
+</code>
 
 ## Problem 3 
 
@@ -269,6 +270,10 @@ error: failed to push some refs to 'https://git.heroku.com/frozen-springs-84985.
 
 ## Problem 4
 
-the confusion matrix won't refresh even though the figure is recomputed if I upload a new ground truth file.
+The confusion matrix won't refresh after the first render; even though the figure is recomputed if I upload a new ground truth file.
+I verified the callback is getting invoked.
+You can fix it by refrehing the page.  But then you need to reload and do all steps over again and it takes some timee.
+
+
 
 
