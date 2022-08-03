@@ -10,26 +10,16 @@ from dash import html
 import dash_bootstrap_components as dbc
 import dash_uploader as du
 
-from dash_extensions.enrich import Dash, ServersideOutput, Output, Input, State, Trigger
+from dash_extensions.enrich import Dash, ServersideOutput, Output, Input, State
 import plotly.figure_factory as ff
 
-# import numpy as np
-from pathlib import Path
-import uuid
 import io
-from base64 import b64encode
-from PIL import Image
-
-import moviepy.editor as mpy
-
-
-# import util
 import keras
 
-# from util import smooth_confusion_matrix
-#from util import parseMinSec, stripComments
 from parsing import parseMinSec, stripComments
 from util import smooth_confusion_matrix2, smooth_join2
+
+MODEL = 'models/model_ffn_202272511446'
 
 CUE_POINTS = 'cue-points'
 
@@ -45,6 +35,7 @@ PREDICTIONS = f'{APP_ID}_predictions'
 
 
 import dash_player
+
 
 layout = html.Div([
     dcc.Store(id=LARGE_UPLOAD_FN_STORE),
@@ -117,7 +108,7 @@ last_value = None
 
 def load_model():
     global model
-    model = keras.models.load_model('../model_ffn_202272511446')
+    model = keras.models.load_model(MODEL)
 
 
 def add_dash(app):
@@ -154,8 +145,7 @@ def add_dash(app):
     def display_cue_buttons(url, children, data, labels):
         p = data
         children.clear()
-        # if len(labels) == len(data):
-        #     p = list(map(lambda x: x[0] + " " + x[1], zip(map(str, data), labels)))
+
         count = 0
         for i in p:
             pretty_label = str(i) if len(labels) != len(data) else str(i) + " " + labels[count]
@@ -178,7 +168,6 @@ def add_dash(app):
 
     @app.callback(
         [
-            # Output('cue-points', 'data'),
             Output('confusion-matrix', 'children'),
             Output('labels', 'data'),
             Output(CUE_POINTS, 'data'),
