@@ -450,7 +450,6 @@ def smooth_confusion_matrix2(predictions, ground_truth, positive_threshold=.5, f
                                     len(predictions))
 
 
-
 def featurize(video):
     name = video.split(".")
 
@@ -462,21 +461,20 @@ def featurize(video):
 
     import librosa
 
-    y,sr = librosa.load(audio)
+    y, sr = librosa.load(audio)
 
     from scipy import signal
 
-    b, a = signal.iirfilter(17, [2000, 7900], rs=60,fs=sr,
+    b, a = signal.iirfilter(17, [2000, 7900], rs=60, fs=sr,
                             btype='band', analog=False, ftype='cheby2')
-    y_f =signal.lfilter(b,a,y,axis=-1)
+    y_f = signal.lfilter(b, a, y, axis=-1)
 
-
-    z=librosa.util.frame(y_f,
-                         frame_length=frame_length_c,
-                         hop_length=math.floor(frame_length_c / hop_in_window_divisions),
-                         axis=0,
-                         writeable=False,
-                         subok=False)
+    z = librosa.util.frame(y_f,
+                           frame_length=frame_length_c,
+                           hop_length=math.floor(frame_length_c / hop_in_window_divisions),
+                           axis=0,
+                           writeable=False,
+                           subok=False)
 
     from itertools import islice
     import numpy as np
@@ -484,10 +482,8 @@ def featurize(video):
     nfft = 512
     hop_length = math.ceil(frame_length_c)
 
-
     def sss(ar, index, n_fft, positive_example=True):
         return window_fft(ar[index], n_fft=nfft, hop_length=hop_length)
-
 
     acc = None
 
@@ -502,7 +498,7 @@ def featurize(video):
         else:
             acc = kk
 
-    kk=acc
+    kk = acc
     return kk
 
 

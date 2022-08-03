@@ -37,6 +37,37 @@ PREDICTIONS = f'{APP_ID}_predictions'
 import dash_player
 
 
+positive_threshold_div = html.Div([
+    dbc.Label("Positive Threshold", html_for="positive-threshold"),
+    dcc.Input(id='positive-threshold', placeholder="Positive Threshold", type="number", value=0.6,
+              max=1, min=0.001),
+    dbc.FormText(
+        "Value threshold .001 - 1 to compare vs. prediction probability score."
+        "  If value is greater than the threshold, the prediction is Positive, otherwise Negative"
+    ),
+])
+
+frame_threshold_div = html.Div([
+    dbc.Label("Frame Threshold", html_for="frame-threshold"),
+    dcc.Input(id='frame-threshold', placeholder="Frame Threshold", type="number", value=2, max=10,
+              min=1),
+    dbc.FormText(
+        "# of Frames 1 -10 threshold when comparing predictions against ground truth to come up with outcomes"
+    ),
+])
+
+cue_delay_div = html.Div([
+    dbc.Label("Cue delay", html_for="relax-cue"),
+    dcc.Input(id='relax-cue', placeholder="Cue delay", type="number", value=0, max=2,
+              min=0),
+    dbc.FormText(
+        "Value from 0 - 2 seconds. Time subtracted from the predicted time when building the play list such"
+        "that there is a delay before whistle.  Gives the listener a chance to get ready!"
+    ),
+    html.Div(id='number-out')
+])
+
+
 layout = html.Div([
     dcc.Store(id=LARGE_UPLOAD_FN_STORE),
     dcc.Store(id=GROUND_TRUTH),
@@ -45,7 +76,7 @@ layout = html.Div([
     dcc.Store(id='last-clicks'),
     dcc.Store(id='last-values'),
     dcc.Store(id="labels"),
-    dbc.Row([html.Img(id="whistle", src='assets/whistle.jpg', height=100), html.H1(children="Who blew the whistle?")]),
+    dbc.Row([html.Img(id="whistle", src='assets/whistle.jpg', height=100), html.H1(children="Whistlizer")]),
     du.Upload(id=LARGE_UPLOAD, text="Drag and Drop Video to Upload", max_file_size=5120),
     html.Div(
         style={
@@ -54,6 +85,7 @@ layout = html.Div([
             'margin': '0% 5% 1% 5%'
         },
         children=[
+            dbc.Form([positive_threshold_div, frame_threshold_div, cue_delay_div]),
             dash_player.DashPlayer(
                 id='video-player',
                 # url='/static/5U5A9285.MOV',
@@ -67,13 +99,6 @@ layout = html.Div([
                 width='512',
                 seekTo=10
             ),
-            html.Div([dcc.Input(id='positive-threshold', placeholder="Positive Threshold", type="number", value=0.6,
-                                max=1, min=0.001),
-                      dcc.Input(id='frame-threshold', placeholder="Frame Threshold", type="number", value=2, max=10,
-                                min=1),
-                      dcc.Input(id='relax-cue', placeholder="Frame Threshold", type="number", value=0.5, max=2,
-                                min=0),
-                      html.Div(id='number-out')]),
             html.Div(id='button-container', children=[]),
             html.Div(id='gt-upload', children=[
                 # du.Upload(id=f'{APP_ID}_ground_truth_upload', max_file_size=5120),
